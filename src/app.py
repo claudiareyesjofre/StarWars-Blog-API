@@ -38,12 +38,70 @@ def sitemap():
 
 @app.route('/user', methods=['GET'])
 def handle_hello():
-
+    all_users = User.query.all()
+    all_users = list(map(lambda user: user.serialize() ,all_users))
     response_body = {
         "msg": "Hello, this is your GET /user response "
     }
 
+    return jsonify(all_users), 200
+
+@app.route('/character', methods=['GET'])
+def character():
+
+    response_body = {
+        "msg": "Hello, this is your GET /character response "
+    }
+
     return jsonify(response_body), 200
+
+@app.route('/character/<int:id>', methods=['GET'])
+def get_one_character(id):
+
+    response_body = {
+        "msg": "Hello, this is your GET /character id response" +str(id)
+    }
+
+    return jsonify(response_body), 200
+
+@app.route('/favorite/character/<int:character_id>',methods=['POST'])
+def modify_favorite_character(character_id):
+ 
+    return jsonify({"msg":"aqui se agrega el favorito " +str(character_id)+ "del personaje"}), 200
+
+@app.route('/favorite/character/<int:character_id>',methods=['DELETE'])
+def delete_favorite_character(character_id):
+
+    return jsonify({"msg":"aqui se elimina el favorito " +str(character_id)+ "del personaje"}), 200
+  
+
+@app.route('/planet', methods=['GET'])
+def planet():
+
+    response_body = {
+        "msg": "Hello, this is your GET /planet response"
+    }
+
+    return jsonify(response_body), 200
+
+@app.route('/planet/<int:id>', methods=['GET'])
+def get_one_planet(id):
+
+    response_body = {
+        "msg": "Hello, this is your GET /aqui esta el planeta con el id " +str(id)
+    }
+
+    return jsonify(response_body), 200
+
+@app.route('/favorite/planet/<int:planet_id>',methods=['POST'])
+def modify_favorite_planet(planet_id):
+
+    return jsonify({"msg":"aqui se agrega el favorito " +str(planet_id)+ "del planeta"}), 200
+   
+@app.route('/favorite/planet/<int:planet_id>',methods=['DELETE'])
+def delete_favorite_planet(planet_id):
+
+    return jsonify({"msg":"aqui se elimina el favorito " +str(planet_id)+ "del planeta"}), 200
 
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':
